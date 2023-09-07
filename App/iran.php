@@ -21,9 +21,9 @@ function isValidProvince($data){
 #================  Read Operations  =================
 function getCities($data = null){
     global $pdo;
-    $province_id = isset($data['province_id']) ? $data['province_id'] : null;
-    $where = '';
-    if(!is_null($province_id) and is_int($province_id)){
+    $province_id = $data['province_id'] ?? null;
+    var_dump($province_id);
+    if(!is_null($province_id) and is_numeric($province_id)){
         $where = "where province_id = {$province_id} ";
     }
     $sql = "select * from city $where";

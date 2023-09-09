@@ -22,9 +22,14 @@ function isValidProvince($data){
 function getCities($data = null){
     global $pdo;
     $province_id = $data['province_id'] ?? null;
+    $fields = $data['fields'] ?? '*';
+    $orderby = $data['orderby'] ?? null;
     $page = $data['page'] ?? null;
-    $fileds = $data['fields'] ?? '*';
     $pagesize = $data['pagesize'] ?? null;
+    $orderByStr = '';
+    if(!is_null($orderby))
+        $orderByStr = " order by $orderby ";
+
     $limit = '';
     if(is_numeric($page) and is_numeric($pagesize)){
         $start = ($page-1) * $pagesize;
@@ -35,8 +40,7 @@ function getCities($data = null){
         $where = "where province_id = {$province_id} ";
     }
     # validate fields
-    $sql = "select $fileds from city $where $limit";
-    echo $sql."\n\n\n\n";
+    $sql = "select $fields from city $where $orderByStr $limit";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $records = $stmt->fetchAll(PDO::FETCH_OBJ);

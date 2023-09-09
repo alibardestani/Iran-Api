@@ -1,8 +1,7 @@
 <?php
 namespace App\Utilities;
 class Response{
-    public static function respond($data, $status_code = self::HTTP_OK)
-    {
+    public static function respond($data,$status_code = self::HTTP_OK){
         # set http headers
         self::setHeaders($status_code);
         # prepare response data
@@ -11,7 +10,7 @@ class Response{
             'http_message' => self::STATUS_TEXTS[$status_code],
             'data' => $data
         ];
-        #convert response to json and return
+        # convert response to json and return
         return json_encode($response);
     }
 
@@ -19,7 +18,7 @@ class Response{
         die(self::respond($data,$status_code));
     }
 
-    public static function setHeaders($status_code){
+    public static function setHeaders($status_code = self::HTTP_OK){
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json; charset=UTF-8");
         header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");

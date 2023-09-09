@@ -2,6 +2,7 @@
 include_once "C:/xampp/htdocs/temp/Iran/loader.php";
 use \App\Services\CityService;
 use \App\Utilities\Response;
+use \App\Utilities\CacheUtility;
 
 $request_method = $_SERVER['REQUEST_METHOD'];
 $request_body = json_decode(file_get_contents('php://input'),true);
@@ -10,6 +11,7 @@ $city_service = new CityService();
 
 switch ($request_method){
     case 'GET':
+        CacheUtility::start();
         $province_id  = $_GET['province_id'] ?? null;
         $request_data = [
             'province_id' => $province_id,
@@ -18,10 +20,12 @@ switch ($request_method){
             'page' => $_GET['page'] ?? null,
             'pagesize' => $_GET['pagesize'] ?? null,
         ];
-        $response = getCities($request_data);
+        $response = $city_service->getCities($request_data);
         if (empty($response))
             Response::respondAndDie($response,Response::HTTP_NOT_FOUND);
-        Response::respondAndDie($response,Response::HTTP_OK);
+        echo Response::respond($response,Response::HTTP_OK);
+        CacheUtility::end();
+        die();
     case 'POST':
         if(!isValidCity($request_body))
             Response::respondAndDie(['Invalid City Data ..'],Response::HTTP_NOT_ACCEPTABLE);

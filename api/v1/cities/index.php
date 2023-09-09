@@ -1,8 +1,19 @@
 <?php
-include_once "C:/xampp/htdocs/temp/Iran/loader.php";
+include_once 'C:\xampp\htdocs\temp\Iran\loader.php';
 use \App\Services\CityService;
 use \App\Utilities\Response;
 use \App\Utilities\CacheUtility;
+
+# check Authorization (use a jwt token)
+# header schema>>> Authorization: Bearer <token>
+$token = getBearerToken();
+$user = isValidToken($token);
+if(!$user)
+    Response::respondAndDie(['Invalid Token!'],Response::HTTP_UNAUTHORIZED);
+
+# authorization ok
+
+# get request token and validate it
 
 $request_method = $_SERVER['REQUEST_METHOD'];
 $request_body = json_decode(file_get_contents('php://input'),true);

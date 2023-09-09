@@ -1,0 +1,17 @@
+{
+    "name": "ali/iran",
+    "require": {
+        "firebase/php-jwt": "^6.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ali\\Iran\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "aliwdxa",
+            "email": "alibardestani201796@gmail.com"
+        }
+    ]
+}

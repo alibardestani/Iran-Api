@@ -16,6 +16,4 @@ class CityService{
     public function deleteCity($city_id){
         return deleteCity($city_id);
     }
-
-
 }

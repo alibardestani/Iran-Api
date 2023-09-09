@@ -22,11 +22,20 @@ function isValidProvince($data){
 function getCities($data = null){
     global $pdo;
     $province_id = $data['province_id'] ?? null;
-    var_dump($province_id);
+    $page = $data['page'] ?? null;
+    $pagesize = $data['pagesize'] ?? null;
+    $limit = '';
+    if(is_numeric($page) and is_numeric($pagesize)){
+        $start = ($page-1) * $pagesize;
+        $limit = " LIMIT $start,$pagesize"; // pagination
+    }
+    $where = '';
     if(!is_null($province_id) and is_numeric($province_id)){
         $where = "where province_id = {$province_id} ";
     }
-    $sql = "select * from city $where";
+    # validate fields
+    $sql = "select * from city $where $limit";
+    echo $sql."\n\n\n\n";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $records = $stmt->fetchAll(PDO::FETCH_OBJ);

@@ -13,6 +13,7 @@ switch ($request_method){
         $province_id  = $_GET['province_id'] ?? null;
         $request_data = [
             'province_id' => $province_id,
+            'fields' => $_GET['fields'] ?? null,
             'page' => $_GET['page'] ?? null,
             'pagesize' => $_GET['pagesize'] ?? null,
         ];

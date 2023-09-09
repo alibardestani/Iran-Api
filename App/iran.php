@@ -23,6 +23,7 @@ function getCities($data = null){
     global $pdo;
     $province_id = $data['province_id'] ?? null;
     $page = $data['page'] ?? null;
+    $fileds = $data['fields'] ?? '*';
     $pagesize = $data['pagesize'] ?? null;
     $limit = '';
     if(is_numeric($page) and is_numeric($pagesize)){
@@ -34,7 +35,7 @@ function getCities($data = null){
         $where = "where province_id = {$province_id} ";
     }
     # validate fields
-    $sql = "select * from city $where $limit";
+    $sql = "select $fileds from city $where $limit";
     echo $sql."\n\n\n\n";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
